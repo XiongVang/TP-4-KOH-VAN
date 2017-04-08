@@ -80,7 +80,7 @@ public class MainMenuPresenter implements IPresenter {
 	}
 
 	private void makeNewSale() {
-		// TODO Auto-generated method stub
+		new MakeSalePresenter(this).present();
 		
 	}
 

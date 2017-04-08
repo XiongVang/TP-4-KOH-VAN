@@ -25,7 +25,7 @@ public class CheckCopiesInPresenter implements IPresenter {
 	private void promptForCopyID() {
 
 		String copyIDPrompt = PresenterHelper.generateScreenTitle("CHECK COPIES IN")
-				+ "\n\n  ( Enter 0 to return to MAIN MENU.  )" + "\n\nEnter copy ID: ";
+				+ "\n\n  ( Enter 0 to return to MAIN MENU. )" + "\n\nEnter copy ID: ";
 
 		while (true) {
 
@@ -38,7 +38,7 @@ public class CheckCopiesInPresenter implements IPresenter {
 			}
 
 			// retrieve copy from store
-			Copy copy = Store.getCopy(copyID);
+			Copy copy = Store.getRentalCopy(copyID);
 
 			// invalid copy ID
 			if (copy == null) {

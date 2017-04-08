@@ -21,10 +21,14 @@ public final class PresenterHelper {
 
 	public static final String COPY_ALREADY_CHECKED_OUT = "\n> COPY ALREADY CHECKED OUT: Please try a different copy ID. <";
 
-	public static final String NO_COPIES_ENTERED = "\n>  NO COPIES ENTERED: Please add enter copy ID. <";
+	public static final String NO_COPIES_ENTERED_FOR_RENTAL = "\n>  NO COPIES ENTERED FOR RENTAL: Please add by entering copy ID. <";
 	
 	public static final String DUPLICATE_COPY_ID = "\n>  DUPLICATE COPY ID: Copy ID already entered.  <";
 
+	public static final String NO_COPIES_ENTERED_FOR_SALE = "\n>  NO COPIES ENTERED FOR SALE: Please add by entering copy ID. <";
+
+	public static final String INVALID_AMOUNT = "\n> INVALID AMOUNT: Please enter amount as a number <";
+	
 	public static String generateScreenTitle(String title) {
 		return PresenterHelper.SEPARATOR + "\n\n***** " + title + " *****";
 	}
@@ -34,7 +38,8 @@ public final class PresenterHelper {
 	}
 
 	public static String generateCheckInSuccessMessage(String copyID, String patronName) {
-		return String.format("\n\n  CHECK IN SUCCESS: %s checked in from %s.", copyID, patronName);
+		return SEPARATOR + 
+				String.format("\n\n  CHECK IN SUCCESS: %s checked in from %s.", copyID, patronName);
 	}
 
 	public static String generateCheckOutSuccessMessage(String patronName, List<String> copyIDs) {
@@ -45,10 +50,17 @@ public final class PresenterHelper {
 			copiesList += "\n\t- " + copyID;
 		}
 
-		return "\n\n  CHECK OUT SUCCESS: " + "\n  Patron name: " + patronName + copiesList;
+		return SEPARATOR + 
+				"\n\n  CHECK OUT SUCCESS: " + "\n  Patron name: " + patronName + copiesList;
+	}
+	
+	public static String generateSaleCompleteMessage(double changeDue){
+		return SEPARATOR + 
+				"\n\n  SALE COMPLETED: " + "\n  Change due: " + changeDue + "\n  Printing receipt...";
 	}
 	
 	public static String generateCopyAlreadyCheckedOutMessage(String outToPatronName) {
 		return String.format("\n  > COPY ALREADY CHECKED OUT: Copy already checked out to %s. <", outToPatronName);
 	}
+	
 }

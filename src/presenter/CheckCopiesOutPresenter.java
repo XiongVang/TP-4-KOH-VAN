@@ -88,7 +88,7 @@ public class CheckCopiesOutPresenter implements IPresenter {
 
 				// no copies entered
 				if (copiesEntered.isEmpty()) {
-					ui.show(PresenterHelper.NO_COPIES_ENTERED);
+					ui.show(PresenterHelper.NO_COPIES_ENTERED_FOR_RENTAL);
 					continue;
 				}
 				completeCheckOutCopies();
@@ -102,7 +102,7 @@ public class CheckCopiesOutPresenter implements IPresenter {
 			}
 
 			// retrieve Copy from store
-			Copy copy = Store.getCopy(copyID);
+			Copy copy = Store.getRentalCopy(copyID);
 
 			// invalid copy ID
 			if (copy == null) {

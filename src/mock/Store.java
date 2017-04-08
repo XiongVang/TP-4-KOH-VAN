@@ -12,7 +12,8 @@ public class Store {
 
 	private static Map<String, Patron> patrons = new HashMap<>();
 	private static Map<String, Textbook> textbookCatalog = new HashMap<>();
-	private static Map<String, Copy> copyInventory = new HashMap<>();
+	private static Map<String, Copy> rentalInventory = new HashMap<>();
+	private static Map<String, Copy> saleInventory = new HashMap<>();
 
 	// static initializer
 	static {
@@ -22,18 +23,32 @@ public class Store {
 		textbookCatalog.put("111", new Textbook("111", "Book1", "Author1", 1.00));
 		textbookCatalog.put("222", new Textbook("222", "Book2", "Author2", 2.00));
 
-		copyInventory.put("C1T1", new Copy("C1T1", textbookCatalog.get("111")));
-		copyInventory.put("C2T1", new Copy("C2T1", textbookCatalog.get("111")));
-		copyInventory.put("C1T2", new Copy("C1T2", textbookCatalog.get("222")));
-		copyInventory.put("C2T2", new Copy("C2T2", textbookCatalog.get("222")));
+		rentalInventory.put("C1T1R", new Copy("C1T1R", textbookCatalog.get("111")));
+		rentalInventory.put("C2T1R", new Copy("C2T1R", textbookCatalog.get("111")));
+		rentalInventory.put("C1T2R", new Copy("C1T2R", textbookCatalog.get("222")));
+		rentalInventory.put("C2TR2", new Copy("C2T2R", textbookCatalog.get("222")));
+		
+		saleInventory.put("C1T1S", new Copy("C1T1S", textbookCatalog.get("111")));
+		saleInventory.put("C2T1S", new Copy("C2T1S", textbookCatalog.get("111")));
+		saleInventory.put("C1T2S", new Copy("C1T2S", textbookCatalog.get("222")));
+		saleInventory.put("C2T2S", new Copy("C2T2S", textbookCatalog.get("222")));
+		
 	}
 
 	public static Patron getPatron(String patronID) {
 		return patrons.get(patronID.toUpperCase());
 	}
 
-	public static Copy getCopy(String copyID) {
-		return copyInventory.get(copyID.toUpperCase());
+	public static Copy getRentalCopy(String copyID) {
+		return rentalInventory.get(copyID.toUpperCase());
+	}
+	
+	public static Copy getSaleCopy(String copyID) {
+		return saleInventory.get(copyID.toUpperCase());
+	}
+	
+	public static Copy removeSaleCopy(String copyID){
+		return saleInventory.remove(copyID);
 	}
 
 	public static Textbook getTextbook(String isbn) {
