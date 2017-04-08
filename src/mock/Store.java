@@ -26,7 +26,7 @@ public class Store {
 		rentalInventory.put("C1T1R", new Copy("C1T1R", textbookCatalog.get("111")));
 		rentalInventory.put("C2T1R", new Copy("C2T1R", textbookCatalog.get("111")));
 		rentalInventory.put("C1T2R", new Copy("C1T2R", textbookCatalog.get("222")));
-		rentalInventory.put("C2TR2", new Copy("C2T2R", textbookCatalog.get("222")));
+		rentalInventory.put("C2T2R", new Copy("C2T2R", textbookCatalog.get("222")));
 		
 		saleInventory.put("C1T1S", new Copy("C1T1S", textbookCatalog.get("111")));
 		saleInventory.put("C2T1S", new Copy("C2T1S", textbookCatalog.get("111")));
