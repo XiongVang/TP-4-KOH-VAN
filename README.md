@@ -6,8 +6,14 @@ Patron IDs:
   -  P1
   -  P2
 
-Copy IDs:
-  -  C1T1
-  -  C2T1
-  -  C1T2
-  -  C2T2
+Rental Copy IDs:
+  -  C1T1R
+  -  C2T1R
+  -  C1T2R
+  -  C2T2R
+ 
+Sale Copy IDs:
+  -  C1T1S
+  -  C2T1S
+  -  C1T2S
+  -  C2T2S
