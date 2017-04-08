@@ -1,7 +1,7 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Patron {
@@ -17,6 +17,10 @@ public class Patron {
 		this.patronID = patronID;
 		this.name = name;
 		this.hold = hold;
+	}
+
+	public Patron(String patronID, String name) {
+		this(patronID, name, new Hold(false));
 	}
 
 	public String getPatronID() {
@@ -79,8 +83,8 @@ public class Patron {
 		return true;
 	}
 
-	public List<Copy> getCopiesOut() {
-		return (List<Copy>) copiesOut.values();
+	public ArrayList<Copy> getCopiesOut() {
+		return new ArrayList<Copy>(copiesOut.values());		
 	}
 
 	@Override
