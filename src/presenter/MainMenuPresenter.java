@@ -1,13 +1,13 @@
 package presenter;
 
-import ui.ConsoleUI;
+import ui.IConsoleUI;
 
 public class MainMenuPresenter implements IPresenter {
 
-	private ConsoleUI ui;
+	private IConsoleUI ui;
 
-	public MainMenuPresenter() {
-		ui = ConsoleUI.getInstance();
+	public MainMenuPresenter(IConsoleUI ui) {
+		this.ui = ui;
 	}
 
 	@Override
@@ -67,20 +67,21 @@ public class MainMenuPresenter implements IPresenter {
 				+ "\n\n Thank you for using TRL. Goodbye.";
 		
 		ui.show(goodbyeMessage);
+		//system.exit(0);
 	}
 	
 	private void checkCopiesOut() {
-		new CheckCopiesOutPresenter(this).present();
+		new CheckCopiesOutPresenter(ui,this).present();
 		
 	}
 	
 	private void checkCopiesIn() {
-		new CheckCopiesInPresenter(this).present();
+		new CheckCopiesInPresenter(ui,this).present();
 		
 	}
 
 	private void makeNewSale() {
-		new MakeSalePresenter(this).present();
+		new MakeSalePresenter(ui,this).present();
 		
 	}
 

@@ -33,6 +33,15 @@ public class Sale {
 		}
 	}
 	
+	public boolean hasCopy(String copyID) {
+		for(Copy copy : saleCopies) {
+			if(copy.getCopyID().equals(copyID.toUpperCase()))
+				return true;
+		}
+		
+		return false;
+	}
+	
 	public String toString(){
 		StringBuilder toReturn = new StringBuilder();
 		

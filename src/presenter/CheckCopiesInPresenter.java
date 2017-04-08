@@ -3,16 +3,16 @@ package presenter;
 import domain.Copy;
 import domain.Patron;
 import mock.Store;
-import ui.ConsoleUI;
+import ui.IConsoleUI;
 
 public class CheckCopiesInPresenter implements IPresenter {
 
 	private IPresenter previousPresenter;
-	private ConsoleUI ui;
+	private IConsoleUI ui;
 
-	public CheckCopiesInPresenter(IPresenter callbackPresenter) {
+	public CheckCopiesInPresenter(IConsoleUI ui, IPresenter callbackPresenter) {
 
-		ui = ConsoleUI.getInstance();
+		this.ui = ui;
 		this.previousPresenter = callbackPresenter;
 	}
 
@@ -75,6 +75,8 @@ public class CheckCopiesInPresenter implements IPresenter {
 	@Override
 	public void back() {
 		previousPresenter.back();
+		previousPresenter = null;
+		ui = null;
 
 	}
 

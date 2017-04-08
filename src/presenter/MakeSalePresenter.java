@@ -3,16 +3,16 @@ package presenter;
 import domain.Copy;
 import domain.Sale;
 import mock.Store;
-import ui.ConsoleUI;
+import ui.IConsoleUI;
 
 public class MakeSalePresenter implements IPresenter {
 
-	private ConsoleUI ui;
+	private IConsoleUI ui;
 	private IPresenter previousPresenter;
 	private Sale currentSale;
 
-	public MakeSalePresenter(IPresenter callbackPresenter) {
-		ui = ConsoleUI.getInstance();
+	public MakeSalePresenter(IConsoleUI ui, IPresenter callbackPresenter) {
+		this.ui = ui;
 		this.previousPresenter = callbackPresenter;
 		this.currentSale = new Sale();
 	}
@@ -35,7 +35,7 @@ public class MakeSalePresenter implements IPresenter {
 		while (true) {
 			copyIDPrompt = PresenterHelper.generateScreenTitle("SALE COPIES")
 					+ "\n\n  ( Enter 0 to cancel sale return to MAIN MENU. )" + currentSale.toString()
-					+ "\n\nEnter copy ID or 'done': ";
+					+ "\n\nEnter copy ID or 'DONE': ";
 
 			String copyID = ui.prompt(copyIDPrompt);
 
@@ -55,7 +55,9 @@ public class MakeSalePresenter implements IPresenter {
 				}
 
 				promptForPayment();
+				return;
 			}
+			
 
 			// retrieve copy from store
 			Copy copy = Store.getSaleCopy(copyID);
@@ -63,6 +65,12 @@ public class MakeSalePresenter implements IPresenter {
 			// invalid copy ID
 			if (copy == null) {
 				ui.show(PresenterHelper.INVALID_COPY_ID);
+				continue;
+			}
+			
+			// copy already entered
+			if (currentSale.hasCopy(copy.getCopyID())) {
+				ui.show(PresenterHelper.DUPLICATE_COPY_ID);
 				continue;
 			}
 
@@ -116,6 +124,9 @@ public class MakeSalePresenter implements IPresenter {
 	private void backToMain() {
 		ui.show("\nReturning to MAIN MENU....");
 		previousPresenter.back();
+		previousPresenter = null;
+		currentSale = null;
+		ui = null;
 	}
 
 }

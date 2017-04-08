@@ -8,18 +8,18 @@ import java.util.Map;
 import domain.Copy;
 import domain.Patron;
 import mock.Store;
-import ui.ConsoleUI;
+import ui.IConsoleUI;
 
 public class CheckCopiesOutPresenter implements IPresenter {
 
-	private ConsoleUI ui;
+	private IConsoleUI ui;
 	private IPresenter previousPresenter;
 	private Patron currentPatron;
 	private Map<String, Copy> copiesEntered;
 
-	public CheckCopiesOutPresenter(IPresenter callbackPresenter) {
+	public CheckCopiesOutPresenter(IConsoleUI ui, IPresenter callbackPresenter) {
 		copiesEntered = new HashMap<>();
-		ui = ConsoleUI.getInstance();
+		this.ui = ui;
 		this.previousPresenter = callbackPresenter;
 	}
 
@@ -73,7 +73,7 @@ public class CheckCopiesOutPresenter implements IPresenter {
 			copyIDPrompt = PresenterHelper.generateScreenTitle("CHECK COPIES OUT SCREEN") + "\n\nCurrent patron is "
 					+ currentPatron.getName() + "\n\nCOPIES ENTERED:" + getCopiesEnteredString()
 					+ "\n\n  ( Enter 0 to CANCEL and return to MAIN MENU. )"
-					+ "\n\nEnter 'DONE' to complete check out or enter copy ID to add:";
+					+ "\n\nEnter copy ID or 'DONE':";
 
 			String copyID = ui.prompt(copyIDPrompt);
 
@@ -159,6 +159,10 @@ public class CheckCopiesOutPresenter implements IPresenter {
 	@Override
 	public void back() {
 		previousPresenter.back();
+		previousPresenter = null;
+		currentPatron = null;
+		copiesEntered = null;
+		ui = null;
 	}
 
 }

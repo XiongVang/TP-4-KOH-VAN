@@ -3,27 +3,21 @@ package ui;
 import lib.StdIn;
 import lib.StdOut;
 
-public class ConsoleUI {
+public class ConsoleUI implements IConsoleUI {
 
-	private static ConsoleUI instance;
 
-	public static ConsoleUI getInstance() {
-		if (instance == null) {
-			instance = new ConsoleUI();
-		}
-
-		return instance;
+	public ConsoleUI() {
 
 	}
 
-	private ConsoleUI() {
 
-	}
-
+	@Override
 	public void show(String message) {
 		StdOut.print(message);
 	}
 
+	
+	@Override
 	public String prompt(String message) {
 		StdOut.print(message);
 
