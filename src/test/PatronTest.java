@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import domain.Copy;
+import domain.Patron;
+import domain.Textbook;
 
 public class PatronTest {
 
