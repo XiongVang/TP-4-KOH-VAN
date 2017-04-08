@@ -7,6 +7,7 @@ import org.junit.Test;
 import domain.Copy;
 import domain.Patron;
 import domain.Textbook;
+import domain.Worker;
 
 public class WorkerTest {
 	

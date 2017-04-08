@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import domain.Copy;
+import domain.Hold;
 import domain.Patron;
 import domain.Textbook;
 
