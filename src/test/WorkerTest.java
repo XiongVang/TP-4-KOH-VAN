@@ -16,12 +16,12 @@ public class WorkerTest {
 
 	@Test
 	public void testWorker() {
-		assertNotNull("Worker should is created", new Worker("W2","test name"));
+		assertNotNull("Worker should be created", new Worker("W2","test name"));
 	}
 
 	@Test
 	public void testGetName() {
-		assertNotNull("Worker should is created", this.w.getName());
+		assertNotNull("Worker should be created", this.w.getName());
 	}
 
 	@Test
