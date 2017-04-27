@@ -1,10 +1,13 @@
 package domain;
 
+import java.time.LocalDate;
+
 public class Copy {
 
 	private String copyID;
 	private Patron outTo;
 	private Textbook copyDescription;
+	private LocalDate dueDate;
 	
 	public Copy(String copyID, Textbook copyDescription){
 		this.copyID = copyID;
@@ -27,6 +30,15 @@ public class Copy {
 		return outTo;
 	}
 	
+	
+	public LocalDate getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(LocalDate dueDate) {
+		this.dueDate = dueDate;
+	}
+
 	@Override
 	public String toString() {
 		String objectDescription = String.format("Copy w/ id: %s", copyID);

@@ -27,6 +27,7 @@ public class MainMenuPresenter implements IPresenter {
 				+ "\n  1 - Check Copies Out" 
 				+ "\n  2 - Check Copies In" 
 				+ "\n  3 - Make New Sale"
+				+ "\n  4 - Change Patron Hold"
 				+ "\n\nEnter selection:";
 		
 		
@@ -51,6 +52,10 @@ public class MainMenuPresenter implements IPresenter {
 				case "3":
 					validInput = true;
 					makeNewSale();
+					break;
+				case "4":
+					validInput = true;
+					changePatronHold();
 					break;
 				default:
 					ui.show(PresenterHelper.INVALID_SELECTION);
@@ -81,6 +86,10 @@ public class MainMenuPresenter implements IPresenter {
 	private void makeNewSale() {
 		new MakeSalePresenter(ui,this).present();
 		
+	}
+	
+	private void changePatronHold(){
+		new ChangePatronHoldPresenter(ui,this).present();
 	}
 
 }
