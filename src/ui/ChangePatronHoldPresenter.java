@@ -91,7 +91,7 @@ public class ChangePatronHoldPresenter implements IPresenter {
 	private void putHold() {
 		controller.putHold();
 		ui.show("\nA hold has been put on patron's account.");
-		showChangeHoldOptions();
+		backToMain();
 		
 	}
 
@@ -128,7 +128,7 @@ public class ChangePatronHoldPresenter implements IPresenter {
 	private void removeHold() {
 		controller.removeHold();
 		ui.show("\nHold has been removed patron's account.");
-		showChangeHoldOptions();
+		backToMain();
 		
 	}
 
