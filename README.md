@@ -4,7 +4,7 @@
 
 Patron IDs:
   -  P1
-  -  P2
+  -  P2 (has hold)
 
 Rental Copy IDs:
   -  C1T1R
