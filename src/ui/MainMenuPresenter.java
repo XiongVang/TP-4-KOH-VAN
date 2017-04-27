@@ -1,6 +1,4 @@
-package presenter;
-
-import ui.IConsoleUI;
+package ui;
 
 public class MainMenuPresenter implements IPresenter {
 

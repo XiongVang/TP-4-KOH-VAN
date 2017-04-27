@@ -1,5 +1,6 @@
 package mock;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ public class Store {
 	private static Map<String, Textbook> textbookCatalog = new HashMap<>();
 	private static Map<String, Copy> rentalInventory = new HashMap<>();
 	private static Map<String, Copy> saleInventory = new HashMap<>();
+	private static LocalDate dueDate = LocalDate.of(2017, 5, 19);
 
 	// static initializer
 	static {
@@ -53,6 +55,10 @@ public class Store {
 
 	public static Textbook getTextbook(String isbn) {
 		return textbookCatalog.get(isbn);
+	}
+	
+	public static LocalDate getDueDate(){
+		return dueDate;
 	}
 
 }

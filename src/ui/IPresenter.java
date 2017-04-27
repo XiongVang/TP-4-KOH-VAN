@@ -1,4 +1,4 @@
-package presenter;
+package ui;
 
 public interface IPresenter {
 	public void present();

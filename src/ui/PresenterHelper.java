@@ -1,4 +1,4 @@
-package presenter;
+package ui;
 
 import java.util.List;
 

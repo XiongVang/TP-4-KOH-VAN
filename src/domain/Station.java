@@ -1,9 +1,9 @@
 package domain;
 
-import presenter.IPresenter;
-import presenter.MainMenuPresenter;
 import ui.ConsoleUI;
 import ui.IConsoleUI;
+import ui.IPresenter;
+import ui.MainMenuPresenter;
 
 public class Station implements IStation{
 

@@ -1,24 +1,25 @@
-package presenter;
+package ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import contoller.CheckCopiesOutController;
 import domain.Copy;
 import domain.Patron;
 import mock.Store;
-import ui.IConsoleUI;
 
 public class CheckCopiesOutPresenter implements IPresenter {
-
+	
+	private CheckCopiesOutController controller;
 	private IConsoleUI ui;
 	private IPresenter previousPresenter;
-	private Patron currentPatron;
-	private Map<String, Copy> copiesEntered;
+
+	
 
 	public CheckCopiesOutPresenter(IConsoleUI ui, IPresenter callbackPresenter) {
-		copiesEntered = new HashMap<>();
+		this.controller = new CheckCopiesOutController();
 		this.ui = ui;
 		this.previousPresenter = callbackPresenter;
 	}
@@ -44,17 +45,16 @@ public class CheckCopiesOutPresenter implements IPresenter {
 				return;
 			}
 
-			// retrieve patron from store
-			currentPatron = Store.getPatron(patronID);
-
 			// invalid patron ID
-			if (currentPatron == null) {
+			if (!controller.isValidPatronID(patronID)) {
 				ui.show(PresenterHelper.INVALID_PATRON_ID);
 				continue;
 			}
+			
+			controller.setCurrentPatron(patronID);
 
 			// patron has hold on account
-			if (currentPatron.hasHold()) {
+			if (controller.currentPatronHasHold()) {
 				ui.show(PresenterHelper.PATRON_HAS_HOLD);
 				continue;
 			}
@@ -71,7 +71,7 @@ public class CheckCopiesOutPresenter implements IPresenter {
 		while (true) {
 
 			copyIDPrompt = PresenterHelper.generateScreenTitle("CHECK COPIES OUT SCREEN") + "\n\nCurrent patron is "
-					+ currentPatron.getName() + "\n\nCOPIES ENTERED:" + getCopiesEnteredString()
+					+ controller.getCurrentPatronName() + "\n\nCOPIES ENTERED:" + controller.getCopiesEnteredString()
 					+ "\n\n  ( Enter 0 to CANCEL and return to MAIN MENU. )"
 					+ "\n\nEnter copy ID or 'DONE':";
 
@@ -87,69 +87,50 @@ public class CheckCopiesOutPresenter implements IPresenter {
 			if (copyID.equalsIgnoreCase("done")) {
 
 				// no copies entered
-				if (copiesEntered.isEmpty()) {
+				if (controller.noCopiesEnteredYet()) {
 					ui.show(PresenterHelper.NO_COPIES_ENTERED_FOR_RENTAL);
 					continue;
 				}
 				completeCheckOutCopies();
 				return;
 			}
-
-			// duplicate copy ID
-			if (copiesEntered.containsKey(copyID.toUpperCase())) {
-				ui.show(PresenterHelper.DUPLICATE_COPY_ID);
-				continue;
-			}
-
-			// retrieve Copy from store
-			Copy copy = Store.getRentalCopy(copyID);
-
+			
 			// invalid copy ID
-			if (copy == null) {
+			if (!controller.isValidCopyID(copyID)) {
 				ui.show(PresenterHelper.INVALID_COPY_ID);
 				continue;
 			}
 
+			// duplicate copy ID
+			if (controller.isDuplicateCopy(copyID)) {
+				ui.show(PresenterHelper.DUPLICATE_COPY_ID);
+				continue;
+			}
+
 			// copy already checked out
-			if (copy.getOutTo() != null) {
+			if (controller.copyIsOut(copyID)) {
 				ui.show(PresenterHelper.COPY_ALREADY_CHECKED_OUT);
 				continue;
 			}
 
-			copiesEntered.put(copy.getCopyID(), copy);
+			controller.addCopy(copyID);
 
 		}
 	}
 
 	private void completeCheckOutCopies() {
 
-		List<String> copyIDs = new ArrayList<>();
+		
 
 		ui.show("Checking copies out...");
 
-		for (Map.Entry<String, Copy> entry : copiesEntered.entrySet()) {
-			currentPatron.checkCopyOut(entry.getValue());
-			copyIDs.add(entry.getKey());
-		}
-
-		ui.show(PresenterHelper.generateCheckOutSuccessMessage(currentPatron.getName(), copyIDs));
+		List<String> copyIDs = controller.checkOutCopies();
+		
+		ui.show(PresenterHelper.generateCheckOutSuccessMessage(controller.getCurrentPatronName(), copyIDs));
 		previousPresenter.back();
 
 	}
 
-	private String getCopiesEnteredString() {
-
-		if (copiesEntered.isEmpty()) {
-			return "\n  ( no copies entered yet)";
-		}
-
-		String copiesStr = "";
-
-		for (Map.Entry<String, Copy> entry : copiesEntered.entrySet()) {
-			copiesStr += "\n  - " + entry.getKey() + "\t" + entry.getValue().getCopyDescription().getTitle();
-		}
-		return copiesStr;
-	}
 
 	private void backToMain() {
 		ui.show("\nReturning to MAIN MENU....");
@@ -160,8 +141,6 @@ public class CheckCopiesOutPresenter implements IPresenter {
 	public void back() {
 		previousPresenter.back();
 		previousPresenter = null;
-		currentPatron = null;
-		copiesEntered = null;
 		ui = null;
 	}
 

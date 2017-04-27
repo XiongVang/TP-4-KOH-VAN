@@ -1,12 +1,13 @@
-package presenter;
+package ui;
 
+import contoller.CheckCopiesInController;
 import domain.Copy;
 import domain.Patron;
 import mock.Store;
-import ui.IConsoleUI;
 
 public class CheckCopiesInPresenter implements IPresenter {
 
+	private CheckCopiesInController controller;
 	private IPresenter previousPresenter;
 	private IConsoleUI ui;
 
@@ -14,6 +15,7 @@ public class CheckCopiesInPresenter implements IPresenter {
 
 		this.ui = ui;
 		this.previousPresenter = callbackPresenter;
+		this.controller = new CheckCopiesInController();
 	}
 
 	@Override
@@ -37,33 +39,26 @@ public class CheckCopiesInPresenter implements IPresenter {
 				return;
 			}
 
-			// retrieve copy from store
-			Copy copy = Store.getRentalCopy(copyID);
-
 			// invalid copy ID
-			if (copy == null) {
+			if (!controller.isValidCopyID(copyID)) {
 				ui.show(PresenterHelper.INVALID_COPY_ID);
 				continue;
 			}
 
-			// retrieve patron copy was checked out to
-			Patron patron = copy.getOutTo();
-
 			// copy never checked out
-			if (patron == null) {
+			if (!controller.copyWasCheckedOut()) {
 				ui.show(PresenterHelper.COPY_NOT_CHECKED_OUT);
 				continue;
 			}
 
-			completeCheckCopyIn(patron, copy);
+			completeCheckCopyIn();
 
 		}
 	}
 
-	private void completeCheckCopyIn(Patron patron, Copy copy) {
+	private void completeCheckCopyIn() {
 		ui.show("Checking copy in...");
-		patron.checkCopyIn(copy);
-		ui.show(PresenterHelper.generateCheckInSuccessMessage(copy.getCopyID(), patron.getName()));
+		ui.show(PresenterHelper.generateCheckInSuccessMessage(controller.getCopyID(), controller.checkCopyIn()));
 
 	}
 

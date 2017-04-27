@@ -1,20 +1,22 @@
-package presenter;
+package ui;
 
+import contoller.MakeSaleController;
 import domain.Copy;
 import domain.Sale;
 import mock.Store;
-import ui.IConsoleUI;
 
 public class MakeSalePresenter implements IPresenter {
 
+	private MakeSaleController controller;
 	private IConsoleUI ui;
 	private IPresenter previousPresenter;
-	private Sale currentSale;
+
 
 	public MakeSalePresenter(IConsoleUI ui, IPresenter callbackPresenter) {
+		
+		this.controller = new MakeSaleController();
 		this.ui = ui;
 		this.previousPresenter = callbackPresenter;
-		this.currentSale = new Sale();
 	}
 
 	@Override
@@ -25,7 +27,7 @@ public class MakeSalePresenter implements IPresenter {
 
 	@Override
 	public void back() {
-		// TODO Auto-generated method stub
+		backToMain();
 
 	}
 
@@ -34,7 +36,7 @@ public class MakeSalePresenter implements IPresenter {
 
 		while (true) {
 			copyIDPrompt = PresenterHelper.generateScreenTitle("SALE COPIES")
-					+ "\n\n  ( Enter 0 to cancel sale return to MAIN MENU. )" + currentSale.toString()
+					+ "\n\n  ( Enter 0 to cancel sale return to MAIN MENU. )" + controller.getSaleString()
 					+ "\n\nEnter copy ID or 'DONE': ";
 
 			String copyID = ui.prompt(copyIDPrompt);
@@ -49,7 +51,7 @@ public class MakeSalePresenter implements IPresenter {
 			if (copyID.equalsIgnoreCase("done")) {
 
 				// no copies entered
-				if (currentSale.copiesInSale() == 0) {
+				if (!controller.saleHasCopies()) {
 					ui.show(PresenterHelper.NO_COPIES_ENTERED_FOR_SALE);
 					continue;
 				}
@@ -58,24 +60,20 @@ public class MakeSalePresenter implements IPresenter {
 				return;
 			}
 			
-
-			// retrieve copy from store
-			Copy copy = Store.getSaleCopy(copyID);
-
 			// invalid copy ID
-			if (copy == null) {
+			if (controller.validCopyID(copyID)) {
 				ui.show(PresenterHelper.INVALID_COPY_ID);
 				continue;
 			}
 			
 			// copy already entered
-			if (currentSale.hasCopy(copy.getCopyID())) {
+			if (controller.saleHasCopy(copyID)) {
 				ui.show(PresenterHelper.DUPLICATE_COPY_ID);
 				continue;
 			}
 
 			// add copy to sale
-			currentSale.addSaleCopy(copy);
+			controller.addSaleCopy(copyID);
 
 		}
 	}
@@ -87,9 +85,9 @@ public class MakeSalePresenter implements IPresenter {
 		while (true) {
 
 			paymentPrompt = PresenterHelper.generateScreenTitle("SALE PAYMENT")
-					+ "\n\n ( Enter 0 to cancel sale and return to main )" + currentSale.toString()
+					+ "\n\n ( Enter 0 to cancel sale and return to main )" + controller.getSaleString()
 					+ "\n\tAmount paid: " + paymentAmount + "\n\tAmount due: "
-					+ (currentSale.getTotal() - paymentAmount) + "\n\n\nEnter payment amount:";
+					+ (controller.getSaleTotal() - paymentAmount) + "\n\n\nEnter payment amount:";
 
 			String amountEntered = ui.prompt(paymentPrompt);
 
@@ -101,15 +99,15 @@ public class MakeSalePresenter implements IPresenter {
 
 			try {
 				
-				paymentAmount += Double.parseDouble(amountEntered);
+				controller.applyPayment(Double.parseDouble(amountEntered));
 				
 				// total not paid yet
-				if (paymentAmount < currentSale.getTotal())
+				if(!controller.saleIsPaid())
 					continue;
 				
 				// total paid
-				this.currentSale.complete();
-				ui.show(PresenterHelper.generateSaleCompleteMessage(paymentAmount-currentSale.getTotal()));
+				controller.completeSale();
+				ui.show(PresenterHelper.generateSaleCompleteMessage(controller.getChangeDue()));
 				backToMain();
 				return;
 				
@@ -125,7 +123,6 @@ public class MakeSalePresenter implements IPresenter {
 		ui.show("\nReturning to MAIN MENU....");
 		previousPresenter.back();
 		previousPresenter = null;
-		currentSale = null;
 		ui = null;
 	}
 
