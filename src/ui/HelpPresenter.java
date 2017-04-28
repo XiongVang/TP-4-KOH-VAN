@@ -32,8 +32,18 @@ public class HelpPresenter implements IPresenter {
 	}
 	
 	private void promptHelpMenu() {
+		promptHelpMenu(null);
+	}
+	
+	private void promptHelpMenu(String msg) {
 		
+		if (msg != null)
+			msg = "\n\n" + msg;
+		else
+			msg = "";
+			
 		String options = PresenterHelper.generateScreenTitle("HELP MENU")
+				+ msg
 				+ "\n\nYou can get information about how to use this tool by selecting items below." 
 				+ "\n\nPlease select from the following options:" 
 				+ "\n\n  0 - EXIT to Main Menu" 
@@ -42,7 +52,6 @@ public class HelpPresenter implements IPresenter {
 				+ "\n  3 - How to: Make New Sale"
 				+ "\n  4 - How to: Change Patron Hold"
 				+ "\n\nEnter selection:";
-		
 		
 		boolean validInput = false;
 		while (!validInput) {
@@ -77,24 +86,28 @@ public class HelpPresenter implements IPresenter {
 	}
 
 	private void changePatronHoldHelp() {
-		ui.show("You can add a hold to a patron by selecting 4 from the main menu.");
-		ui.show("Next, enter a patron ID (P1 or P2), then select 1 to add a hold.");
+		String msg = "You can add a hold to a patron by selecting 4 from the main menu." +
+				"\nNext, enter a patron ID (P1 or P2), then select 1 to add a hold.";
+		promptHelpMenu(msg);
 	}
 
 	private void makeNewSaleHelp() {
-		ui.show("You can make a sale to a patron by selecting 3 from the main menu.");
-		ui.show("Next, enter a copy ID (C1T1S, C2T1S, C1T2S or C2T2S) and enter 'done' when done.");
+		String msg = "You can make a sale to a patron by selecting 3 from the main menu." +
+				"\nNext, enter copy IDs to sell (C1T1S, C2T1S, C1T2S or C2T2S) and enter 'done' when done.";
+		promptHelpMenu(msg);
 	}
 
 	private void checkCopiesInHelp() {
-		ui.show("You can check in a copy from a patron by selecting 2 from the main menu.");
-		ui.show("Next, enter a copy ID (C1T1R, C2T1R, C1T2R or C2T2R) and enter 'done' when done.");
+		String msg = "You can check in a copy from a patron by selecting 2 from the main menu." +
+				"\nNext, enter copy IDs to check in (C1T1R, C2T1R, C1T2R or C2T2R) and enter 'done' when done.";
+		promptHelpMenu(msg);
 	}
 
 	private void checkCopiesOutHelp() {
-		ui.show("You can check out a copy to a patron by selecting 1 from the main menu.");
-		ui.show("Next, enter a patron ID (P1 or P2).");
-		ui.show("Then, enter a copy ID (C1T1R, C2T1R, C1T2R or C2T2R) and enter 'done' when done.");
+		String msg = "You can check out a copy to a patron by selecting 1 from the main menu." +
+				"\nNext, enter a patron ID (P1 or P2)." +
+				"\nThen, enter copy IDs to check out (C1T1R, C2T1R, C1T2R or C2T2R) and enter 'done' when done.";
+		promptHelpMenu(msg);
 	}
 
 }

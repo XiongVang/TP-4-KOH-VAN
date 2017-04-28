@@ -28,6 +28,7 @@ public class MainMenuPresenter implements IPresenter {
 				+ "\n  2 - Check Copies In" 
 				+ "\n  3 - Make New Sale"
 				+ "\n  4 - Change Patron Hold"
+				+ "\n  ? - Help Menu"
 				+ "\n\nEnter selection:";
 		
 		
@@ -40,7 +41,7 @@ public class MainMenuPresenter implements IPresenter {
 				case "0":
 					validInput = true;
 					goodbye();
-					break;
+					return;
 				case "1":
 					validInput = true;
 					checkCopiesOut();
