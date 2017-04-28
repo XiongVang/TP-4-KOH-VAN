@@ -57,6 +57,10 @@ public class MainMenuPresenter implements IPresenter {
 					validInput = true;
 					changePatronHold();
 					break;
+				case "?":
+					validInput = true;
+					viewHelpMenu();
+					break;
 				default:
 					ui.show(PresenterHelper.INVALID_SELECTION);
 			}
@@ -88,8 +92,11 @@ public class MainMenuPresenter implements IPresenter {
 		
 	}
 	
-	private void changePatronHold(){
+	private void changePatronHold() {
 		new ChangePatronHoldPresenter(ui,this).present();
 	}
 
+	private void viewHelpMenu() {
+		new HelpPresenter(ui,this).present();
+	}
 }
