@@ -18,7 +18,7 @@ public class SaleTest {
 	@Before
 	public void setUp() throws Exception {
 		Textbook t = new Textbook("TEST12345","test title", "test author", 1);
-		this.testCopy = new Copy("TEST123456", t);
+		this.testCopy = new Copy("TEST12345", t);
 	}
 
 	@After
@@ -42,7 +42,7 @@ public class SaleTest {
 		Sale s = new Sale();
 		s.addSaleCopy(this.testCopy);
 		StdOut.println(s.getTotal());
-		assertEquals("sale should have total of 1",s.getTotal(),1.0);		
+		assertEquals("sale should have total of 1",s.getTotal(),1.0,.001);		
 	}
 
 	@Test

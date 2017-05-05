@@ -23,9 +23,7 @@ public class CheckCopiesOutController {
 	}
 
 	public boolean isDuplicateCopy(String copyID) {
-
 		return copiesEntered.containsKey(copyID.toUpperCase());
-
 	}
 
 	public boolean isValidPatronID(String patronID) {

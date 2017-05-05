@@ -24,7 +24,11 @@ public class CheckCopiesInController {
 	}
 
 	public String checkCopyIn() {
+
 		if(copy == null)
+			return "";
+		
+		if (this.copyWasCheckedOut())
 			return "";
 		
 		Patron patron = copy.getOutTo();

@@ -16,8 +16,6 @@ public class CheckCopiesOutPresenter implements IPresenter {
 	private IConsoleUI ui;
 	private IPresenter previousPresenter;
 
-	
-
 	public CheckCopiesOutPresenter(IConsoleUI ui, IPresenter callbackPresenter) {
 		this.controller = new CheckCopiesOutController();
 		this.ui = ui;
@@ -119,8 +117,6 @@ public class CheckCopiesOutPresenter implements IPresenter {
 	}
 
 	private void completeCheckOutCopies() {
-
-		
 
 		ui.show("Checking copies out...");
 
