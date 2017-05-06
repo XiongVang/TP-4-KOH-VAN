@@ -27,13 +27,19 @@ public class CheckCopiesInControllerTest {
 		ccic.setCopy(cid);
 		assertEquals("copy ID is " + cid,ccic.getCopyID(),cid);
 		assertFalse("copy should not be checked out",ccic.copyWasCheckedOut());
-		this.checkCopyOut();
+		this.checkCopyOut(cid);
 		assertNotNull("should get name of patron",ccic.checkCopyIn());
 	}
 	
-	public boolean checkCopyOut() {
+	@Test
+	public void testNullCopyIn() {
+		CheckCopiesInController ccic = new CheckCopiesInController();
+		assertFalse("null copy, return false",ccic.copyWasCheckedOut());
+		assertEquals("null copy, empty string","",ccic.checkCopyIn());
+	}	
+	
+	public boolean checkCopyOut(String cid) {
 		CheckCopiesOutController ccoc = new CheckCopiesOutController();
-		String cid = "C1T1R";
 		ccoc.addCopy(cid);
 		ccoc.setCurrentPatron("P1");
 		ccoc.checkOutCopies();
