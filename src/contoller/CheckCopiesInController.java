@@ -9,8 +9,7 @@ public class CheckCopiesInController {
 	private Copy copy;
 	
 	public boolean isValidCopyID(String copyID){
-		copy = Store.getRentalCopy(copyID);
-		return copy != null;
+		return Store.getRentalCopy(copyID) != null;
 	}
 	
 	public void setCopy(String copyID){

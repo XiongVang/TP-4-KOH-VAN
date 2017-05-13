@@ -43,6 +43,8 @@ public class CheckCopiesInPresenter implements IPresenter {
 			if (!controller.isValidCopyID(copyID)) {
 				ui.show(PresenterHelper.INVALID_COPY_ID);
 				continue;
+			}else{
+				controller.setCopy(copyID);
 			}
 
 			// copy never checked out
