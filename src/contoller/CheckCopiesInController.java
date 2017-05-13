@@ -9,7 +9,8 @@ public class CheckCopiesInController {
 	private Copy copy;
 	
 	public boolean isValidCopyID(String copyID){
-		return Store.getRentalCopy(copyID) != null;
+		copy = Store.getRentalCopy(copyID);
+		return copy != null;
 	}
 	
 	public void setCopy(String copyID){
@@ -28,7 +29,7 @@ public class CheckCopiesInController {
 		if(copy == null)
 			return "";
 		
-		if (this.copyWasCheckedOut())
+		if (!this.copyWasCheckedOut())
 			return "";
 		
 		Patron patron = copy.getOutTo();
